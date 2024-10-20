@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.catalogs.catalogsproducts.products.Product;
@@ -14,11 +15,11 @@ import com.catalogs.catalogsproducts.products.ProductResponseDTO;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map; // Importar Map
+import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/products")
-public class productsController { // Corrigir a capitalização do nome da classe
+public class productsController {
 
     @Autowired
     private ProductRepository repository;
@@ -29,10 +30,22 @@ public class productsController { // Corrigir a capitalização do nome da class
                 .map(ProductResponseDTO::new)
                 .toList();
 
-        Map<String, List<ProductResponseDTO>> response = new HashMap<>(); // Criar um novo mapa
-        response.put("products", productList); // Adicionar a lista ao mapa com a chave "products"
+        Map<String, List<ProductResponseDTO>> response = new HashMap<>();
+        response.put("products", productList);
 
-        return response; // Retornar o mapa como resposta
+        return response;
+    }
+
+    @GetMapping("/catalogo") // Novo endpoint para filtrar por marca
+    public Map<String, List<ProductResponseDTO>> getByBrand(@RequestParam String brand) {
+        List<ProductResponseDTO> filteredProducts = repository.findByBrand(brand).stream()
+                .map(ProductResponseDTO::new)
+                .toList();
+
+        Map<String, List<ProductResponseDTO>> response = new HashMap<>();
+        response.put("products", filteredProducts);
+
+        return response;
     }
 
     @PostMapping
