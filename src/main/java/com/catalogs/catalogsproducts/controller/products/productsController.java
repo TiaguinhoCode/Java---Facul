@@ -1,4 +1,4 @@
-package com.catalogs.catalogsproducts.controller;
+package com.catalogs.catalogsproducts.controller.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.catalogs.catalogsproducts.products.Product;
+import com.catalogs.catalogsproducts.models.products.Product;
 import com.catalogs.catalogsproducts.products.ProductRepository;
 import com.catalogs.catalogsproducts.products.ProductResponseDTO;
 
@@ -36,7 +36,7 @@ public class productsController {
         return response;
     }
 
-    @GetMapping("/catalogo") // Novo endpoint para filtrar por marca
+    @GetMapping("/catalogs") // Novo endpoint para filtrar por marca
     public Map<String, List<ProductResponseDTO>> getByBrand(@RequestParam String brand) {
         List<ProductResponseDTO> filteredProducts = repository.findByBrand(brand).stream()
                 .map(ProductResponseDTO::new)

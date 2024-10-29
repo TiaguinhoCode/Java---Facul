@@ -1,4 +1,4 @@
-package com.catalogs.catalogsproducts.products;
+package com.catalogs.catalogsproducts.models.products;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,9 +22,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String stock;
-    private boolean isActive;
+    private boolean is_active;
     private String description;
     private String urlImagem;
     private String brand;
     private Integer price;
+
 }
